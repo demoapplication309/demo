@@ -1,0 +1,94 @@
+<div class="row mt-5">
+    <div class="col-6 text-left">
+        <h3>Categories</h3>
+    </div>
+    <div class="col-6 text-right">
+        <button class="btn btn-success btn-raised mr-1" (click)="openCategoryModal(CategoryModal,false)"><i class="fa fa-plus"></i>
+            &nbsp; Add Category</button>
+
+            <button class="btn btn-primary btn-raised" [routerLink]="['/products']"><i class="fa fa-list"></i>
+                &nbsp; Products List</button>
+    </div>
+</div>
+
+<section id="simple-table">
+    <div class="row text-left">
+        <div class="col-sm-12">
+            <div class="card" id="print-section">
+                <div class="card-content">
+                    <div class="card-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <!-- <th>Category ID </th> -->
+                                    <th>Serial No.</th>
+                                    <th>Category </th>
+                                    <th>Status </th>
+                                    <th>Action </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="text-center" *ngIf="(!categories ||(categories && categories.length<=0))">
+                                    <td colspan="5">No Data Found.</td>
+                                </tr>
+                                <tr *ngFor="let category of categories;let i=index;">
+                                    <!-- <td>{{category.id}}</td> -->
+                                    <td>{{i+1}}</td>
+                                    <td>{{category.name}}</td>
+                                    <td>{{category.status=='0'?'Deactivated':'Activated'}}</td>
+
+                                    <th>
+                                        <button type="button" class="btn btn-info btn-raised mr-1"
+                                            (click)="openCategoryModal(CategoryModal,true,category)"> <i
+                                                class="fa fa-edit"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-danger btn-raised" (click)="deleteCategory(category)"> <i
+                                                class="fa fa-trash"></i> </button>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--Basic Table Ends-->
+ 
+
+<ng-template #CategoryModal let-modal>
+    <div class="modal-header">
+        <div class="row">
+            <div class="col-12">
+                <h4 class="modal-title" id="modal-basic-title ">New Category</h4>
+            </div>
+        </div>
+    </div>
+    <div class="modal-body ">
+        <div class="row">
+            <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                    <label>Name<span class="danger mb-0" style="font-size: 15px;">* </span></label>
+                    <input type="text" [(ngModel)]="selectedProductCategory.name" class="form-control"
+                        placeholder="Enter name ">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea class="form-control" [(ngModel)]="selectedProductCategory.description"
+                        placeholder="Enter description"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary btn-raised" (click)="saveCategory()">
+            Add</button>
+        <button type="button" class="btn btn-primary btn-raised" (click)="closeModal()"> Close</button>
+    </div>
+</ng-template>
+
+ 
